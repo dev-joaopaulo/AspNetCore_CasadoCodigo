@@ -24,6 +24,8 @@ namespace CasaDoCodigo
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddDistributedMemoryCache();
+            services.AddSession();
 
             string connectionString = Configuration.GetConnectionString("Default");
 
@@ -34,6 +36,9 @@ namespace CasaDoCodigo
             services.AddTransient<IDataService, DataService>();
 
             services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<IItemOrderRepository, ItemOrderRepository>();
+            services.AddTransient<ICadastroRepository, CadastroRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,13 +56,14 @@ namespace CasaDoCodigo
 
             app.UseStaticFiles();
 
+            app.UseSession();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Pedido}/{action=Carrossel}/{codigo?}");
             });
-
+            
             serviceProvider.GetService<IDataService>().StartDb();
         }
     }

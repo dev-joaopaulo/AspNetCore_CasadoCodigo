@@ -1,4 +1,8 @@
-﻿@model List<Produto>
+﻿@{ 
+    ViewData["Title"] = "Carrosel";
+}
+
+@model List<Produto>
 
 <h3>Catálogo</h3>
 
@@ -34,7 +38,9 @@
                             <div class="produto-nome">@product.Nome</div>
                             <div><h4><strong>@product.Preco</strong></h4></div>
                             <div class="text-center">
-                                <a href="/" class="btn btn-success">Adicionar</a>
+                                <a asp-action="carrinho"
+                                   asp-route-codigo ="@product.Codigo"
+                                   class="btn btn-success">Adicionar</a>
                             </div>
                         </div>
                     </div>
